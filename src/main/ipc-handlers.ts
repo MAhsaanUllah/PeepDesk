@@ -107,7 +107,17 @@ function cacheSettings(state: AppState): void {
 
 function getStatePath(): string {
   if (!statePath) {
-    statePath = path.join(app.getPath('userData'), 'nekoboard-state.json');
+    const file = path.join(app.getPath('userData'), 'peepdesk-state.json');
+    const legacy = path.join(app.getPath('userData'), 'nekoboard-state.json');
+    if (!fs.existsSync(file) && fs.existsSync(legacy)) {
+      try {
+        fs.renameSync(legacy, file);
+      } catch {
+        statePath = legacy;
+        return statePath;
+      }
+    }
+    statePath = file;
   }
   return statePath;
 }

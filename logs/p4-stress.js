@@ -8,7 +8,7 @@ const { execSync } = require('child_process');
 const { connect, sleep } = require('./r32-lib');
 
 const UD = path.resolve('.stress-userdata');
-const STATE = path.join(UD, 'nekoboard-state.json');
+const STATE = path.join(UD, 'peepdesk-state.json');
 const PNG =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
 

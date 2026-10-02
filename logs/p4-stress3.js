@@ -1,7 +1,7 @@
 const { execSync } = require('child_process');
 const { connect, sleep } = require('./r32-lib');
 const fs = require('fs'), path = require('path');
-const STATE = path.resolve('.stress-userdata/nekoboard-state.json');
+const STATE = path.resolve('.stress-userdata/peepdesk-state.json');
 function sample(label){const out=execSync('powershell -NoProfile -ExecutionPolicy Bypass -File logs/p4-procs.ps1 -Label "'+label+'"',{encoding:'utf8'});let ws=0,priv=0,cpu=0;const rows={};for(const l of out.split(/\r?\n/)){const m=l.trim().match(/^(\d+)\s+(\S+)\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)$/);if(m){rows[m[2]]=(rows[m[2]]||0)+Number(m[4]);ws+=Number(m[3]);priv+=Number(m[4]);cpu+=Number(m[5]);}}return{label,ws:+ws.toFixed(1),priv:+priv.toFixed(1),cpu:+cpu.toFixed(1),privBy:rows};}
 const heap=(c)=>c.evaluate('return performance.memory?Math.round(performance.memory.usedJSHeapSize/1048576*10)/10:-1;');
 async function main(){

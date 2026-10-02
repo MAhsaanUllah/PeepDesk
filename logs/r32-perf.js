@@ -3,7 +3,7 @@ const http = require('http');
 const WebSocket = require('ws');
 const { connect, sleep } = require('./r32-lib');
 
-const STATE = process.env.APPDATA + '/NekoBoard/nekoboard-state.json';
+const STATE = process.env.APPDATA + '/PeepDesk/peepdesk-state.json';
 
 function genItems(n) {
   const items = [];

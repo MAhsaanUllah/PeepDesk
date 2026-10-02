@@ -48,7 +48,7 @@ PeepDesk v0.1.0 is currently distributed as an unsigned Windows portfolio build,
 
 ## Data & privacy
 
-- The board is stored locally in `%APPDATA%\NekoBoard\nekoboard-state.json` (the legacy internal folder name is retained for backward compatibility with existing installs), with imported videos in `%APPDATA%\NekoBoard\media\`.
+- The board is stored locally in `%APPDATA%\PeepDesk\peepdesk-state.json`, with imported media in `%APPDATA%\PeepDesk\media\`. Installs upgrading from the legacy `NekoBoard` folder name migrate automatically on first launch.
 - **Uninstalling does not delete your boards or media.**
 - No accounts, no cloud sync, no analytics, no telemetry. The only network activity is fetching things you explicitly ask for: Google Fonts (typography), favicons/link previews for URLs you paste, and YouTube embeds you add.
 - Alternate profile for testing/portability: `PeepDesk.exe --user-data-dir="D:\my-board"` runs a fully separate instance (different profiles can run side by side).
@@ -74,7 +74,6 @@ The installer is intentionally unsigned for the portfolio release (SmartScreen w
 ## Known limitations
 
 - Unsigned installer; no automatic updates.
-- Legacy internal naming (`%APPDATA%\NekoBoard`, `nekoboard-state.json`) remains for backward compatibility.
 - Undo history is in-memory and resets when the app restarts.
 - Exact viewport pan/zoom position is not persisted between sessions.
 - Memory footprint is the Electron/Chromium multi-process baseline (~250–300 MB working set), not a native-app floor.
