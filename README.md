@@ -69,7 +69,7 @@ The pet reacts to your reminders — idle on the desktop, focused when it's time
 
 ## Windows installation
 
-1. Download `PeepDesk-Setup-0.1.0.exe`.
+1. Download `PeepDesk-Setup-0.1.0.exe` from the [latest release](https://github.com/MAhsaanUllah/PeepDesk/releases/latest).
 2. Run it — a per-user silent install; no administrator rights required. The app installs to `%LOCALAPPDATA%\Programs\peepdesk` and adds a **PeepDesk** Start Menu shortcut.
 3. Launch **PeepDesk** from the Start Menu; it also starts automatically on login from then on.
 
