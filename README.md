@@ -2,6 +2,16 @@
 
 PeepDesk is an ultra-lightweight Windows desktop companion: a floating animated mascot, hydration and chai-break reminders, and an instant-summon infinite whiteboard canvas — one small Electron app, all data stored locally.
 
+## Screenshots
+
+The infinite canvas with thought, to-do, link (auto-preview), rich-text and image cards, top toolbar and zoom pill:
+
+![PeepDesk canvas](assets/screenshots/canvas.png)
+
+Fluffy Star, the always-on-top desktop pet that delivers the reminders:
+
+![Fluffy Star pet](assets/screenshots/pet.png)
+
 ## Features
 
 - **Desktop pet (Fluffy Star)** — always-on-top overlay with idle/alert animations and a speech bubble; hides to the system tray.
