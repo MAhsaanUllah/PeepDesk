@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeepDesk</title>
+    <link rel="stylesheet" href="../../../dist/renderer/tailwind.css" />
+    <link rel="stylesheet" href="animations.css" />
+  </head>
+  <body class="bg-transparent overflow-hidden select-none">
+    <div id="bubble" class="bubble hidden">
+      <span id="bubble-icon"></span><span id="bubble-text">Time to hydrate!</span>
+      <div class="bubble-actions">
+        <button id="btn-snooze">Snooze</button>
+        <button id="btn-dismiss">OK</button>
+      </div>
+    </div>
+    <div id="pet" class="pet">
+      <div id="sprite" class="sprite">
+        <div class="fx fx-water"><span>💧</span><span>💧</span><span>💧</span></div>
+        <div class="fx fx-break"><span>☕</span><span>☕</span><span>☕</span></div>
+      </div>
+    </div>
+    <script type="module" src="../../../dist/renderer/pet/pet.js"></script>
+  </body>
+</html>

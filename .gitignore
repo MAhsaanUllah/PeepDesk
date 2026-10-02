@@ -1,0 +1,18 @@
+# dependencies / build output
+node_modules/
+dist/
+release/
+
+# generated junk
+*.log
+*.tmp
+.env
+.stress*/
+
+# board backups & personal data (never commit)
+*board-backup*.json
+
+# private docs — only README.md is public
+*.md
+!README.md
+.cursorrules

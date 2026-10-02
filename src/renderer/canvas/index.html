@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; media-src 'self' file: https:;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PeepDesk Canvas</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Lato:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
+    />
+    <link rel="stylesheet" href="../../../dist/renderer/tailwind.css" />
+    <link rel="stylesheet" href="canvas.css" />
+  </head>
+  <body class="m-0 overflow-hidden">
+    <header id="titlebar" class="toolbar">
+      <span class="brand"><img src="../../../assets/app-icon.png" alt="" draggable="false" /><span class="brand-name">PeepDesk</span></span>
+      <span class="tb-div"></span>
+      <div class="tb-group" id="grp-create">
+        <button class="tb-btn create" id="tb-thought" title="Add Thought" aria-label="Add Thought"><span class="ico">💡</span><span class="tb-label">Thought</span></button>
+        <button class="tb-btn create" id="tb-todo" title="Add To-Do" aria-label="Add To-Do"><span class="ico">✓</span><span class="tb-label">To-Do</span></button>
+        <button class="tb-btn create" id="tb-link" title="Add Link" aria-label="Add Link"><span class="ico">🔗</span><span class="tb-label">Link</span></button>
+        <button class="tb-btn create" id="tb-video" title="Add Video" aria-label="Add Video"><span class="ico">🎬</span><span class="tb-label">Video</span></button>
+        <button class="tb-btn create" id="tb-text" title="Add Text box" aria-label="Add Text box"><span class="ico">T</span><span class="tb-label">Text</span></button>
+      </div>
+      <span class="tb-div" id="div-format"></span>
+      <div class="tb-group" id="grp-format">
+        <span class="tb-drop" id="font-drop">
+          <button id="font-drop-btn" class="tb-sel" title="Font — selected card, or default for new cards">Aa</button>
+          <div id="font-drop-panel" class="tb-panel hidden"></div>
+        </span>
+        <span class="tb-drop" id="size-drop">
+          <button id="size-drop-btn" class="tb-sel" title="Text size of selected card">14px</button>
+          <div id="size-drop-panel" class="tb-panel hidden"></div>
+        </span>
+        <span class="tb-div tb-div-fmt"></span>
+        <button class="tb-btn fmt" id="fmt-bold" title="Bold (Ctrl+B)" aria-label="Bold" aria-pressed="false">B</button>
+        <button class="tb-btn fmt" id="fmt-italic" title="Italic (Ctrl+I)" aria-label="Italic" aria-pressed="false">I</button>
+        <button class="tb-btn fmt" id="fmt-underline" title="Underline (Ctrl+U)" aria-label="Underline" aria-pressed="false">U</button>
+        <span class="tb-drop" id="color-drop">
+          <button id="color-drop-btn" class="tb-btn fmt" title="Text color">A</button>
+          <div id="color-drop-panel" class="tb-panel hidden"></div>
+        </span>
+        <button class="tb-btn fmt" id="fmt-clear" title="Clear formatting" aria-label="Clear formatting">Tx</button>
+      </div>
+      <span class="tb-drop" id="overflow-drop">
+        <button class="tb-btn tb-icon hidden" id="overflow-btn" title="More tools" aria-label="More tools" aria-haspopup="true" aria-expanded="false">⋯</button>
+        <div class="tb-panel overflow-panel hidden" id="overflow-panel"></div>
+      </span>
+      <div class="tb-group tb-utility" id="grp-utility">
+        <span class="tb-drop" id="clip-drop">
+          <button class="tb-btn" id="tb-clip" title="Clipboard stash" aria-label="Clipboard stash" aria-haspopup="true"><span class="ico">📋</span><span class="tb-label">Clipboard</span></button>
+          <div id="clip-panel" class="tb-panel clip hidden">
+            <textarea id="clip-input" placeholder="Paste (Ctrl+V) or type text…"></textarea>
+            <button id="clip-save" class="tb-btn">Save</button>
+            <div id="clip-list"></div>
+          </div>
+        </span>
+        <span class="tb-drop" id="settings-drop">
+          <button class="tb-btn" id="tb-settings" title="Reminder settings" aria-label="Reminder settings" aria-haspopup="true"><span class="ico">⚙</span><span class="tb-label">Settings</span></button>
+          <div id="settings-panel" class="tb-panel settings hidden">
+            <div class="panel-title">Reminder Settings</div>
+            <label class="set-row"><input type="checkbox" id="set-water-on" /> Water glass reminder</label>
+            <div class="chip-row" id="set-water-every">
+              <button class="chip" data-min="60">1h</button>
+              <button class="chip" data-min="90">1.5h</button>
+              <button class="chip" data-min="120">2h</button>
+              <button class="chip" data-min="180">3h</button>
+            </div>
+            <label class="set-row"><input type="checkbox" id="set-chai-on" /> Chai reminder</label>
+            <div class="chip-row" id="set-chai-every">
+              <button class="chip" data-min="30">30m</button>
+              <button class="chip" data-min="45">45m</button>
+              <button class="chip" data-min="50">50m</button>
+              <button class="chip" data-min="60">1h</button>
+              <button class="chip" data-min="90">1.5h</button>
+            </div>
+            <div class="set-row">Only between <input type="time" id="set-chai-from" value="10:00" /> and <input type="time" id="set-chai-to" value="15:00" /></div>
+          </div>
+        </span>
+      </div>
+    </header>
+    <main id="board">
+      <div id="world"></div>
+      <div id="empty-state" class="empty hidden">
+        <div id="empty-star"></div>
+        <span>Double-click anywhere to drop a Thought, To-Do, Link or Video.</span>
+      </div>
+      <div id="spawn-menu" class="spawn-menu hidden">
+        <button id="spawn-thought">💡 Thought</button>
+        <button id="spawn-todo">✓ To-Do</button>
+        <button id="spawn-link">🔗 Link</button>
+        <button id="spawn-video">🎬 Video</button>
+        <button id="spawn-text">T Text</button>
+      </div>
+      <div id="ctx-menu" class="ctx hidden" role="menu" aria-label="Node actions">
+        <button role="menuitem" data-act="duplicate">Duplicate<span class="ctx-key">Ctrl+D</span></button>
+        <hr />
+        <button role="menuitem" data-act="forward">Bring Forward</button>
+        <button role="menuitem" data-act="backward">Send Backward</button>
+        <button role="menuitem" id="ctx-extra" hidden></button>
+        <hr />
+        <button role="menuitem" data-act="delete" class="danger">Delete<span class="ctx-key">Del</span></button>
+      </div>
+      <div id="marquee" class="hidden"></div>
+      <div class="zoom-ctl">
+        <button id="zoom-out" class="zoom-btn" title="Zoom out" aria-label="Zoom out">−</button>
+        <button id="zoom-label" class="zoom-btn zoom-pct" title="Reset zoom to 100%" aria-label="Reset zoom to 100%">100%</button>
+        <button id="zoom-in" class="zoom-btn" title="Zoom in" aria-label="Zoom in">+</button>
+      </div>
+    </main>
+    <script type="module" src="../../../dist/renderer/canvas/canvas.js"></script>
+  </body>
+</html>

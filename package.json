@@ -1,0 +1,64 @@
+{
+  "name": "peepdesk",
+  "productName": "PeepDesk",
+  "version": "0.1.0",
+  "description": "Ultra-lightweight Windows desktop companion: floating pet, health reminders, instant whiteboard canvas.",
+  "author": "MAhsaan Ullah",
+  "main": "dist/main/index.js",
+  "private": true,
+  "scripts": {
+    "build:main": "tsc -p tsconfig.node.json",
+    "build:renderer": "tsc -p tsconfig.renderer.json",
+    "build:css": "tailwindcss -i src/renderer/tailwind.css -o dist/renderer/tailwind.css --minify",
+    "build": "npm run build:main && npm run build:renderer && npm run build:css",
+    "watch": "tsc -p tsconfig.node.json --watch",
+    "start": "electron .",
+    "dev": "npm run build && electron .",
+    "dist": "npm run build && electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.peepdesk.app",
+    "productName": "PeepDesk",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "src/renderer/**/*",
+      "assets/**/*",
+      "package.json",
+      "!**/*.ts",
+      "!**/*.map",
+      "!src/renderer/tailwind.css"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "PeepDesk-Setup-${version}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "@types/node": "^24.0.0",
+    "electron": "^38.0.0",
+    "electron-builder": "^26.15.3",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.9.0",
+    "ws": "^8.22.0"
+  }
+}
