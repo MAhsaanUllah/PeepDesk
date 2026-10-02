@@ -1,4 +1,19 @@
+<div align="center">
+
+<img src="assets/app-icon.png" width="128" alt="PeepDesk logo" />
+
 # PeepDesk
+
+*Your little companion for a bigger mind.*
+
+[![release](https://img.shields.io/badge/release-v0.1.0-F59E0B)](https://github.com/MAhsaanUllah/PeepDesk)
+[![platform](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)](#windows-installation)
+[![Electron](https://img.shields.io/badge/Electron-38-2B2E3A?logo=electron&logoColor=white)](https://www.electronjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![data](https://img.shields.io/badge/data-100%25_local-blueviolet)](#data--privacy)
+
+</div>
 
 PeepDesk is an ultra-lightweight Windows desktop companion: a floating animated mascot, hydration and chai-break reminders, and an instant-summon infinite whiteboard canvas — one small Electron app, all data stored locally.
 
@@ -13,6 +28,20 @@ The infinite canvas with thought, to-do, link (auto-preview), rich-text and imag
 Fluffy Star, the always-on-top desktop pet that delivers the reminders:
 
 ![Fluffy Star pet](assets/screenshots/pet.png)
+
+### Fluffy Star's moods
+
+The pet reacts to your reminders — idle on the desktop, focused when it's time to hydrate, sleepy at chai-break alerts, and celebrating when you respond to one (plus a spare happy pose in the collection):
+
+<table>
+<tr>
+<td align="center"><img src="assets/mascot/fluffy-star/idle.webp" width="150" alt="Idle" /><br/><b>Idle</b></td>
+<td align="center"><img src="assets/mascot/fluffy-star/happy.webp" width="150" alt="Happy" /><br/><b>Happy</b></td>
+<td align="center"><img src="assets/mascot/fluffy-star/focus.webp" width="150" alt="Focus" /><br/><b>Focus</b></td>
+<td align="center"><img src="assets/mascot/fluffy-star/sleepy.webp" width="150" alt="Sleepy" /><br/><b>Sleepy</b></td>
+<td align="center"><img src="assets/mascot/fluffy-star/success.webp" width="150" alt="Success" /><br/><b>Success</b></td>
+</tr>
+</table>
 
 ## Features
 
