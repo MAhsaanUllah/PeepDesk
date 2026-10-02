@@ -2,7 +2,9 @@
 
 PeepDesk is an ultra-lightweight Windows desktop companion: a floating animated mascot, hydration and chai-break reminders, and an instant-summon infinite whiteboard canvas — one small Electron app, all data stored locally.
 
-## Screenshots
+![PeepDesk hero](assets/screenshots/hero.png)
+
+## Screenshots (real app)
 
 The infinite canvas with thought, to-do, link (auto-preview), rich-text and image cards, top toolbar and zoom pill:
 
