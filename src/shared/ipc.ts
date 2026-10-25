@@ -8,9 +8,22 @@ export const IPC = {
   openLink: 'link:open',
   clipRead: 'clip:read-text',
   linkPreview: 'link:preview',
+  imagePick: 'image:pick',
+  imageImport: 'image:import',
+  imageUrl: 'image:url',
   videoPick: 'video:pick',
   videoImport: 'video:import',
   videoUrl: 'video:url',
   videoForget: 'video:forget',
-  videoOpen: 'video:open'
+  videoOpen: 'video:open',
+  petIgnoreMouse: 'pet:ignore-mouse',
+  petBubbleMode: 'pet:bubble-mode',
+  boardsList: 'boards:list',
+  boardCreate: 'boards:create',
+  boardRename: 'boards:rename',
+  boardArchive: 'boards:archive',
+  boardRestore: 'boards:restore',
+  boardSwitch: 'boards:switch',
+  boardDocumentExport: 'boards:document-export',
+  boardDocumentImport: 'boards:document-import'
 } as const;

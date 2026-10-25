@@ -1,6 +1,7 @@
 html,
 body {
   background: transparent;
+  pointer-events: none;
 }
 
 /* Untitled UI tokens (shared values with the canvas chrome) */
@@ -21,14 +22,20 @@ body {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  cursor: grab;
+  pointer-events: none;
 }
 
 .sprite {
   position: relative;
-  width: 96px;
-  height: 96px;
-  margin-bottom: 12px;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 0px;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.sprite:active {
+  cursor: grabbing;
 }
 
 /* ---------- Fluffy Star mascot (fluffy-star.json is the source of truth) ---------- */
@@ -301,6 +308,7 @@ body {
   color: var(--ui-gray-700);
   box-shadow: var(--ui-shadow-lg);
   z-index: 10;
+  pointer-events: auto;
 }
 
 .bubble.hidden {

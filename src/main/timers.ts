@@ -1,8 +1,8 @@
-import { ipcMain } from 'electron';
 import { IPC } from '../shared/ipc';
 import type { AlertKind, TimerAction } from '../shared/types';
 import { getSettings } from './ipc-handlers';
 import { getPetWindow } from './pet-window';
+import { registerAuthorizedOn } from './ipc-auth';
 
 // coarse clock; intervals derived from timestamps
 const SNOOZE_MS = 10 * 60 * 1000; // snooze = re-fire after 10 min
@@ -60,8 +60,9 @@ export function stopTimers(): void {
 }
 
 export function registerTimerIpc(): void {
-  ipcMain.on(
+  registerAuthorizedOn(
     IPC.timerAction,
+    'pet',
     (_event, payload: { kind: AlertKind; action: TimerAction }) => {
       const { kind, action } = payload ?? {};
       if (kind !== 'water' && kind !== 'break') return;

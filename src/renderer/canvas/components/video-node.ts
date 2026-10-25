@@ -6,12 +6,34 @@ export function youtubeId(raw: string): string | null {
   return m?.[1] ?? null;
 }
 
-function resolveMediaSrc(node: CanvasNode, media: HTMLVideoElement): void {
+function showVideoFallback(holder: HTMLElement, el: HTMLElement, msg: string): void {
+  el.classList.add('media-missing');
+  holder.replaceChildren();
+  const banner = document.createElement('div');
+  banner.className = 'media-fallback-banner';
+  banner.innerHTML = `<span class="fallback-icon">⚠️</span><span class="fallback-msg">${msg}</span>`;
+  holder.appendChild(banner);
+}
+
+function resolveMediaSrc(node: CanvasNode, holder: HTMLElement, media: HTMLVideoElement, el: HTMLElement): void {
   const name = node.content.slice('media:'.length);
   media.dataset.media = name;
-  void window.canvasApi.videoUrl(name).then((url) => {
-    if (url) media.src = url;
-  });
+  if (window.canvasApi?.videoUrl) {
+    void window.canvasApi
+      .videoUrl(name)
+      .then((url) => {
+        if (url) {
+          media.src = url;
+        } else {
+          showVideoFallback(holder, el, 'Video not found on disk');
+        }
+      })
+      .catch(() => {
+        showVideoFallback(holder, el, 'Failed to resolve video');
+      });
+  } else {
+    showVideoFallback(holder, el, 'Video API unavailable');
+  }
 }
 
 export function buildVideoNode(node: CanvasNode): HTMLElement {
@@ -42,12 +64,20 @@ export function buildVideoNode(node: CanvasNode): HTMLElement {
     const video = document.createElement('video');
     video.controls = true;
     video.preload = 'metadata';
-    resolveMediaSrc(node, video);
+    video.onerror = () => {
+      el.classList.add('media-error');
+      showVideoFallback(holder, el, 'Corrupt or unplayable video');
+    };
+    resolveMediaSrc(node, holder, video, el);
     holder.appendChild(video);
   } else {
     const video = document.createElement('video');
     video.controls = true;
     video.preload = 'metadata';
+    video.onerror = () => {
+      el.classList.add('media-error');
+      showVideoFallback(holder, el, 'Corrupt or unplayable video');
+    };
     video.src = node.content;
     holder.appendChild(video);
   }

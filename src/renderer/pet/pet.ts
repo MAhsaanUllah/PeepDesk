@@ -6,13 +6,14 @@ declare global {
     petApi: {
       toggleCanvas: () => void;
       movePet: (dx: number, dy: number) => void;
+      setIgnoreMouse: (ignore: boolean) => void;
+      setBubbleMode: (show: boolean) => void;
       onTimerAlert: (cb: (kind: AlertKind) => void) => void;
       timerAction: (kind: AlertKind, action: TimerAction) => void;
     };
   }
 }
 
-const pet = document.getElementById('pet')!;
 const sprite = document.getElementById('sprite')!;
 const bubble = document.getElementById('bubble')!;
 const bubbleIcon = document.getElementById('bubble-icon')!;
@@ -38,16 +39,57 @@ const ALERT_ICON: Record<AlertKind, string> = {
 let activeAlert: AlertKind | null = null;
 let dragOrigin: { x: number; y: number } | null = null;
 let moved = false;
+let currentIgnoreState: boolean | null = null;
 
-// Manual drag (window:move-pet) so plain left-click still toggles the canvas.
-// -webkit-app-region: drag would swallow click events.
-pet.addEventListener('pointerdown', (e) => {
-  dragOrigin = { x: e.screenX, y: e.screenY };
-  moved = false;
-  pet.setPointerCapture(e.pointerId);
+function updateIgnoreMouse(ignore: boolean): void {
+  // Never ignore while actively dragging the pet
+  if (dragOrigin !== null && ignore) return;
+  if (currentIgnoreState === ignore) return;
+  currentIgnoreState = ignore;
+  window.petApi.setIgnoreMouse(ignore);
+}
+
+function isInteractivePoint(e: MouseEvent | PointerEvent): boolean {
+  if (isBubbleShowing()) {
+    const target = e.target as HTMLElement | null;
+    if (target?.closest('#bubble:not(.hidden)')) return true;
+  }
+
+  // Tight organic contour around the star mascot (42px radius from center of star)
+  const spriteRect = sprite.getBoundingClientRect();
+  const centerX = spriteRect.left + spriteRect.width / 2;
+  const centerY = spriteRect.top + spriteRect.height / 2;
+  const radius = spriteRect.width / 2;
+  const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+
+  return dist <= radius;
+}
+
+// OS mouse event forwarding: pass through clicks on transparent empty areas
+window.addEventListener('pointermove', (e) => {
+  const isInteractive = isInteractivePoint(e);
+  updateIgnoreMouse(!isInteractive);
 });
 
-pet.addEventListener('pointermove', (e) => {
+window.addEventListener('pointerleave', () => {
+  if (dragOrigin === null) {
+    updateIgnoreMouse(true);
+  }
+});
+
+// Manual drag and click attached ONLY to the star mascot contour
+sprite.addEventListener('pointerdown', (e) => {
+  if (!isInteractivePoint(e) && !isBubbleShowing()) {
+    updateIgnoreMouse(true);
+    return;
+  }
+  updateIgnoreMouse(false);
+  dragOrigin = { x: e.screenX, y: e.screenY };
+  moved = false;
+  sprite.setPointerCapture(e.pointerId);
+});
+
+sprite.addEventListener('pointermove', (e) => {
   if (!dragOrigin) return;
   const dx = e.screenX - dragOrigin.x;
   const dy = e.screenY - dragOrigin.y;
@@ -58,10 +100,24 @@ pet.addEventListener('pointermove', (e) => {
   }
 });
 
-pet.addEventListener('pointerup', () => {
+sprite.addEventListener('pointerup', (e) => {
+  try {
+    sprite.releasePointerCapture(e.pointerId);
+  } catch {
+    // ignore
+  }
   const wasClick = dragOrigin !== null && !moved;
   dragOrigin = null;
-  if (wasClick && !isBubbleShowing()) window.petApi.toggleCanvas();
+  if (wasClick && !isBubbleShowing()) {
+    window.petApi.toggleCanvas();
+  }
+  updateIgnoreMouse(!isInteractivePoint(e));
+});
+
+sprite.addEventListener('pointercancel', () => {
+  dragOrigin = null;
+  moved = false;
+  updateIgnoreMouse(true);
 });
 
 function isBubbleShowing(): boolean {
@@ -70,6 +126,7 @@ function isBubbleShowing(): boolean {
 
 function showAlert(kind: AlertKind): void {
   activeAlert = kind;
+  window.petApi.setBubbleMode(true);
   bubbleIcon.innerHTML = ALERT_ICON[kind];
   bubbleText.textContent = ALERT_TEXT[kind];
   bubbleActions.style.display = '';
@@ -82,11 +139,13 @@ function hideAlert(): void {
   activeAlert = null;
   bubbleIcon.innerHTML = '';
   bubble.classList.add('hidden');
+  window.petApi.setBubbleMode(false);
   sprite.classList.remove('alert', 'state-water', 'state-break');
   setStarState(star, 'success');
   window.setTimeout(() => {
     if (!sprite.classList.contains('alert')) setStarState(star, 'idle');
   }, 900);
+  updateIgnoreMouse(true);
 }
 
 btnSnooze.addEventListener('click', () => {
@@ -101,11 +160,16 @@ btnDismiss.addEventListener('click', () => {
 
 window.petApi.onTimerAlert(showAlert);
 
-// Startup greeting; auto-hides unless a real alert replaced it in the meantime.
+// Startup greeting: compact 96x96 idle mode by default, greeting auto-hides and shrinks window
 bubbleIcon.innerHTML = '';
-bubbleText.textContent = "Hi! I'm PeepDesk 👋";
+bubbleText.textContent = "Hi! I'm PeepJam! 👋";
 bubbleActions.style.display = 'none';
+window.petApi.setBubbleMode(true);
 bubble.classList.remove('hidden');
 window.setTimeout(() => {
-  if (!activeAlert && bubbleText.textContent.startsWith('Hi!')) bubble.classList.add('hidden');
-}, 6000);
+  if (!activeAlert && bubbleText.textContent.startsWith('Hi!')) {
+    bubble.classList.add('hidden');
+    window.petApi.setBubbleMode(false);
+    updateIgnoreMouse(true);
+  }
+}, 3500);

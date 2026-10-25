@@ -11,6 +11,10 @@ release/
 
 # board backups & personal data (never commit)
 *board-backup*.json
+.dev-profile*/
+.visual-qa-profile*/
+.final-visual-gate-profile*/
+.shape-test-profile*/
 
 # private docs — only README.md is public
 *.md

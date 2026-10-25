@@ -155,8 +155,10 @@ function editable(prop: 'content' | 'title', value: string, placeholder: string,
 
 export function buildCard(node: CanvasNode): HTMLElement {
   const el = document.createElement('div');
-  el.className = `node card ${node.type}`;
+  const typeClass = node.type === 'text' ? 'text peepjam-text node-text-standalone' : node.type;
+  el.className = `node card board-node ${typeClass}`;
   el.dataset.node = node.id;
+  el.dataset.type = node.type;
   el.style.left = `${node.x}px`;
   el.style.top = `${node.y}px`;
   el.style.width = `${node.width}px`;
