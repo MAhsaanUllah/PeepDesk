@@ -21,11 +21,19 @@ PeepDesk is an ultra-lightweight Windows desktop companion combining an animated
 
 ## Screenshots (real app)
 
-The infinite canvas with thought, to-do, link (auto-preview), rich-text and image cards, top toolbar and zoom pill:
+The **PeepJam** infinite spatial canvas with flowchart diagrams, pastel sticky notes, checklist items, and frosted glass dock:
 
-![PeepDesk canvas](assets/screenshots/canvas.png)
+![PeepJam canvas](assets/screenshots/hero.png)
 
-Fluffy Star, the always-on-top desktop pet that delivers the reminders:
+Multi-board switcher (`Ctrl+Shift+B`) for seamless 100% offline canvas organization:
+
+![PeepJam multi-board switcher](assets/screenshots/boards-modal.png)
+
+Light and dark theme parity with dynamic Windows caption control synchronization:
+
+![PeepJam light theme](assets/screenshots/light-theme.png)
+
+Fluffy Star, the always-on-top desktop pet that delivers health reminders:
 
 ![Fluffy Star pet](assets/screenshots/pet.png)
 
