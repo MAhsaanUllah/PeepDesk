@@ -31,6 +31,7 @@ declare global {
       boardSwitch?: (id: string) => Promise<BoardsResult>;
       boardDocumentExport?: () => Promise<unknown>;
       boardDocumentImport?: (doc: unknown) => Promise<BoardsResult>;
+      setTheme?: (theme: string) => void;
     };
   }
 }

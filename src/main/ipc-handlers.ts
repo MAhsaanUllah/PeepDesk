@@ -6,7 +6,7 @@ import { pathToFileURL } from 'url';
 import { IPC } from '../shared/ipc';
 import { DEFAULT_SETTINGS, type AppState, type LinkPreview, type ReminderSettings } from '../shared/types';
 import { movePetBy, setPetBubbleMode, setPetIgnoreMouse } from './pet-window';
-import { getCanvasWindow, toggleCanvas } from './canvas-window';
+import { getCanvasWindow, toggleCanvas, updateCanvasTitleBarTheme } from './canvas-window';
 import { registerAuthorizedHandle, registerAuthorizedOn } from './ipc-auth';
 import { candidateTimestamp, isSkewArtifactStamp, skewFallbackSort } from './state-recovery';
 import {
@@ -342,6 +342,12 @@ export function registerIpcHandlers(): void {
     }
   });
 
+  registerAuthorizedOn(IPC.themeSet, 'canvas', (_event, theme: unknown) => {
+    if (typeof theme === 'string') {
+      updateCanvasTitleBarTheme(theme);
+    }
+  });
+
   registerAuthorizedOn(IPC.stateSave, 'canvas', (_event, state: unknown) => {
     if (isValidState(state)) {
       cacheSettings(state);
@@ -392,9 +398,11 @@ export function registerIpcHandlers(): void {
     const preFailed = flushPendingOrCancel(false);
     if (preFailed) return preFailed;
     const now = Date.now();
+    const trimmed = name.trim().slice(0, 120);
     const board = {
       id: newBoardId(),
-      name: name.trim().slice(0, 120),
+      name: trimmed,
+      title: trimmed,
       createdAt: now,
       updatedAt: now,
       items: []
@@ -422,13 +430,18 @@ export function registerIpcHandlers(): void {
     const target = boardsDoc.boards.find((b) => b.id === id);
     if (!target) return { ok: false, error: 'not-found', ...metaDoc() };
     const prevName = target.name;
-    target.name = name.trim().slice(0, 120);
+    const prevTitle = target.title;
+    const trimmed = name.trim().slice(0, 120);
+    target.name = trimmed;
+    target.title = trimmed;
     target.updatedAt = Date.now();
     if (flushPendingOrCancel(true)) {
       target.name = prevName;
+      target.title = prevTitle;
       return { ok: false, error: 'save-failed', ...metaDoc() };
     }
-    return metaResult(boardsDoc);
+    const extra = id === boardsDoc.activeBoardId ? { state: flattenActiveBoard(boardsDoc) } : {};
+    return metaResult(boardsDoc, extra);
   });
 
   registerAuthorizedHandle(IPC.boardArchive, 'canvas', (_event, id: unknown): BoardsResult => {

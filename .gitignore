@@ -15,6 +15,9 @@ release/
 .visual-qa-profile*/
 .final-visual-gate-profile*/
 .shape-test-profile*/
+.test-menu-probe/
+.test-profile-path/
+.test-ux-journeys/
 
 # private docs — only README.md is public
 *.md

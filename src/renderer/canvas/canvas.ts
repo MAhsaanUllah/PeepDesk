@@ -4194,9 +4194,22 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
-  if (mod && k === 'b' && (!editing || isCardEditor)) {
+  if (mod && e.shiftKey && k === 'b') {
+    e.preventDefault();
+    openBoardsModal();
+    return;
+  }
+
+  if (mod && k === 'b' && !e.shiftKey && (!editing || isCardEditor)) {
     e.preventDefault();
     toggleBoldSelection();
+    return;
+  }
+
+  if (mod && k === 'n' && !editing) {
+    e.preventDefault();
+    openBoardsModal();
+    if (boardsNewName) boardsNewName.focus();
     return;
   }
 
@@ -4330,12 +4343,7 @@ function flashStatus(text: string, isError = false): void {
 }
 
 const menuBarItems = [
-  { btn: document.getElementById('btn-menu-hamburger'), drop: document.getElementById('dropdown-app') },
-  { btn: document.getElementById('btn-menu-file'), drop: document.getElementById('dropdown-file') },
-  { btn: document.getElementById('btn-menu-edit'), drop: document.getElementById('dropdown-edit') },
-  { btn: document.getElementById('btn-menu-insert'), drop: document.getElementById('dropdown-insert') },
-  { btn: document.getElementById('btn-menu-view'), drop: document.getElementById('dropdown-view') },
-  { btn: document.getElementById('btn-menu-help'), drop: document.getElementById('dropdown-help') }
+  { btn: document.getElementById('btn-menu-hamburger'), drop: document.getElementById('dropdown-app') }
 ];
 
 let isMenuBarActive = false;
@@ -4526,6 +4534,10 @@ menuBarItems.forEach(({ btn, drop }, idx) => {
         break;
       case 'boards':
         openBoardsModal();
+        break;
+      case 'new-board':
+        openBoardsModal();
+        if (boardsNewName) boardsNewName.focus();
         break;
       case 'settings':
         closeAllDockPopovers();
@@ -4737,7 +4749,7 @@ titleEditHint?.addEventListener('click', () => {
 });
 
 boardTitleEl.addEventListener('blur', () => {
-  const nextTitle = boardTitleEl.innerText.trim() || 'Offline Whiteboard';
+  const nextTitle = boardTitleEl.innerText.trim() || 'My Board';
   getState().title = nextTitle;
   boardTitleEl.innerText = nextTitle;
   scheduleSave();
@@ -4834,7 +4846,13 @@ function renderBoards(res: BoardsResult): void {
     main.className = 'board-row-main';
     const name = document.createElement('div');
     name.className = 'board-row-name';
-    name.textContent = meta.active ? `${meta.name} (active)` : meta.name;
+    name.textContent = meta.name;
+    if (meta.active) {
+      const activeBadge = document.createElement('span');
+      activeBadge.className = 'board-active-badge';
+      activeBadge.textContent = 'Active';
+      name.appendChild(activeBadge);
+    }
     main.appendChild(name);
     const sub = document.createElement('div');
     sub.className = 'board-row-meta';
@@ -4857,6 +4875,15 @@ function renderBoards(res: BoardsResult): void {
     };
 
     if (!meta.archived && !meta.active) {
+      row.style.cursor = 'pointer';
+      row.title = `Switch to "${meta.name}"`;
+      row.addEventListener('click', async (e) => {
+        if ((e.target as HTMLElement).closest('button, input')) return;
+        if (boardsInteractionPending) return;
+        boardsInteractionPending = true;
+        try { await switchToBoard(meta.id); } finally { boardsInteractionPending = false; }
+      });
+
       mkBtn('Open', 'modal-btn secondary board-open-btn').addEventListener('click', async () => {
         if (boardsInteractionPending) return;
         boardsInteractionPending = true;
@@ -4938,6 +4965,15 @@ function beginBoardRename(id: string): void {
     const result = await window.canvasApi?.boardRename?.(id, value);
     if (result?.ok) {
       flashStatus(`Canvas renamed to "${value}".`);
+      if (result.state && result.activeBoardId === id) {
+        applyBoardState(result.state, id);
+      } else {
+        const isCurrentActive = currentBoardsCache.find((b) => b.id === id)?.active;
+        if (isCurrentActive && boardTitleEl) {
+          boardTitleEl.innerText = value;
+          getState().title = value;
+        }
+      }
       await refreshBoards();
     } else {
       flashStatus(`Could not rename: ${boardErrorText(result?.error)}`, true);
@@ -4984,7 +5020,7 @@ function applyBoardState(next: AppState, boardId: string): void {
   paintSelection();
 
   applyGridStyle((next.gridStyle ?? 'dots') as GridStyle);
-  if (boardTitleEl) boardTitleEl.innerText = next.title || '';
+  if (boardTitleEl) boardTitleEl.innerText = next.title || 'Untitled Canvas';
 
   rebuildBoard();
   updateSelectionBar();
@@ -5017,8 +5053,8 @@ async function switchToBoard(id: string): Promise<boolean> {
   applyBoardState(res.state, res.activeBoardId || id);
   const name = res.boards?.find((b) => b.id === id)?.name ?? 'canvas';
   flashStatus(`Switched to "${name}".`);
-  if (boardsModal && !boardsModal.classList.contains('hidden')) {
-    renderBoards(res);
+  if (boardsModal) {
+    closeSurface(boardsModal);
   }
   return true;
 }
@@ -5029,6 +5065,10 @@ boardsModal?.addEventListener('click', (e) => {
 boardsCloseBtn?.addEventListener('click', () => {
   if (boardsModal) closeSurface(boardsModal);
 });
+document.getElementById('btn-header-boards')?.addEventListener('click', () => {
+  openBoardsModal();
+});
+
 boardsCreateBtn?.addEventListener('click', async () => {
   if (boardsInteractionPending) return;
   const name = boardsNewName?.value.trim() ?? '';
@@ -5045,7 +5085,7 @@ boardsCreateBtn?.addEventListener('click', async () => {
     if (result?.ok && result.state && result.activeBoardId) {
       applyBoardState(result.state, result.activeBoardId);
       flashStatus(`Canvas "${name}" created.`);
-      await refreshBoards();
+      if (boardsModal) closeSurface(boardsModal);
       if (boardsNewName) boardsNewName.value = '';
     } else {
       flashStatus(`Could not create canvas: ${boardErrorText(result?.error)}`, true);
@@ -5239,6 +5279,7 @@ clearConfirmBtn?.addEventListener('click', () => {
     scheduleSave();
   });
   closeSurface(clearModal);
+  flashStatus('Canvas cleared. Press Ctrl+Z to undo.');
 });
 clearCancelBtn?.addEventListener('click', () => closeSurface(clearModal));
 clearCloseBtn?.addEventListener('click', () => closeSurface(clearModal));
@@ -5311,6 +5352,9 @@ function applyTheme(theme: string | undefined): void {
   document.body.classList.toggle('system-theme', pref === 'system');
   if (setThemeSelect && setThemeSelect.value !== pref) setThemeSelect.value = pref;
   syncThemeControls(pref);
+  if (window.canvasApi?.setTheme) {
+    window.canvasApi.setTheme(effective);
+  }
 }
 
 function markChip(rowId: string, min: number): void {
@@ -5358,13 +5402,15 @@ settingsCloseBtn?.addEventListener('click', (e) => {
 });
 settingsDrop?.addEventListener('pointerdown', (e) => e.stopPropagation());
 
-setThemeSelect?.addEventListener('change', () => {
-  const value = (setThemeSelect.value as 'dark' | 'light' | 'system') || 'dark';
+const onThemeSelectChange = () => {
+  const value = (setThemeSelect?.value as 'dark' | 'light' | 'system') || 'dark';
   curSettings().theme = value;
   applyTheme(value);
   saveSettings();
   flashStatus(value === 'system' ? 'System theme applied' : value === 'light' ? 'Light theme applied' : 'Dark theme applied');
-});
+};
+setThemeSelect?.addEventListener('change', onThemeSelectChange);
+setThemeSelect?.addEventListener('input', onThemeSelectChange);
 
 tbThemeToggle?.addEventListener('click', (e) => {
   e.stopPropagation();
@@ -5977,7 +6023,12 @@ document.addEventListener('pointerdown', (e) => {
   if (!exportPanel.classList.contains('hidden') && !target.closest('#export-drop')) {
     exportPanel.classList.add('hidden');
   }
-  if (!settingsPanel.classList.contains('hidden') && !target.closest('#settings-drop') && !target.closest('[data-menu="settings"]')) {
+  if (
+    !settingsPanel.classList.contains('hidden') &&
+    !target.closest('#settings-panel') &&
+    !target.closest('#settings-drop') &&
+    !target.closest('[data-menu="settings"]')
+  ) {
     closeSurface(settingsPanel);
   }
   if (!clipPanel.classList.contains('hidden') && !target.closest('#clip-drop')) {
@@ -6007,7 +6058,7 @@ document.addEventListener('pointerdown', (e) => {
   if (!target.closest('.shape-color-picker, .shape-btn')) {
     document.querySelectorAll('.shape-color-picker:not(.hidden)').forEach((p) => p.classList.add('hidden'));
   }
-  if (!target.closest('.peepjam-dock, .figjam-dock')) {
+  if (!target.closest('.peepjam-dock, .figjam-dock, .modal-backdrop, .modal-window, #settings-panel, .tb-panel')) {
     closeAllDockPopovers();
   }
 });

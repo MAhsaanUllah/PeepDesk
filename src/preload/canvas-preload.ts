@@ -25,10 +25,12 @@ const IPC = {
   boardRestore: 'boards:restore',
   boardSwitch: 'boards:switch',
   boardDocumentExport: 'boards:document-export',
-  boardDocumentImport: 'boards:document-import'
+  boardDocumentImport: 'boards:document-import',
+  themeSet: 'theme:set'
 } as const;
 
 contextBridge.exposeInMainWorld('canvasApi', {
+  setTheme: (theme: string) => ipcRenderer.send(IPC.themeSet, theme),
   loadState: (): Promise<AppState> => ipcRenderer.invoke(IPC.stateLoad),
   saveState: (state: AppState) => ipcRenderer.send(IPC.stateSave, state),
   hide: () => ipcRenderer.send(IPC.toggleCanvas),

@@ -32,116 +32,74 @@
           </button>
           <div class="menu-dropdown app-menu-dropdown hidden" id="dropdown-app">
             <div class="menu-section-header">Canvas &amp; Files</div>
-            <button class="menu-item" data-menu="boards"><span>🗂️ Boards / Canvases…</span><span class="menu-hint">Ctrl+Shift+B</span></button>
-            <button class="menu-item" data-menu="templates"><span>⚡ Templates Library…</span><span class="menu-hint">Ctrl+T</span></button>
-            <button class="menu-item" data-menu="save"><span>💾 Save to Disk</span><span class="menu-hint">Ctrl+S</span></button>
-            <button class="menu-item" data-menu="import-json"><span>📂 Open / Import JSON…</span><span class="menu-hint">Ctrl+O</span></button>
-            <button class="menu-item" data-menu="import-n8n"><span>⚡ Import n8n Workflow…</span></button>
+            <button class="menu-item" data-menu="boards">
+              <span class="menu-item-left"><span class="menu-ico">🗂️</span><span>All Canvases…</span></span>
+              <span class="menu-hint">Ctrl+Shift+B</span>
+            </button>
+            <button class="menu-item" data-menu="new-board">
+              <span class="menu-item-left"><span class="menu-ico">➕</span><span>New Canvas…</span></span>
+              <span class="menu-hint">Ctrl+N</span>
+            </button>
+            <button class="menu-item" data-menu="save">
+              <span class="menu-item-left"><span class="menu-ico">💾</span><span>Save to Disk</span></span>
+              <span class="menu-hint">Ctrl+S</span>
+            </button>
+            <button class="menu-item" data-menu="import-json">
+              <span class="menu-item-left"><span class="menu-ico">📂</span><span>Open / Import JSON…</span></span>
+              <span class="menu-hint">Ctrl+O</span>
+            </button>
+            <button class="menu-item" data-menu="import-n8n">
+              <span class="menu-item-left"><span class="menu-ico">⚡</span><span>Import n8n Workflow…</span></span>
+            </button>
+            <button class="menu-item" data-menu="templates">
+              <span class="menu-item-left"><span class="menu-ico">📐</span><span>Templates Library…</span></span>
+              <span class="menu-hint">Ctrl+T</span>
+            </button>
+
             <div class="menu-divider"></div>
             <div class="menu-section-header">Export</div>
-            <button class="menu-item" data-menu="export-png"><span>📸 Export as PNG</span><span class="menu-hint">Shift+E</span></button>
-            <button class="menu-item" data-menu="export-json"><span>📦 Export JSON Backup</span></button>
+            <button class="menu-item" data-menu="export-png">
+              <span class="menu-item-left"><span class="menu-ico">📸</span><span>Export as PNG</span></span>
+              <span class="menu-hint">Shift+E</span>
+            </button>
+            <button class="menu-item" data-menu="export-json">
+              <span class="menu-item-left"><span class="menu-ico">📦</span><span>Export JSON Backup</span></span>
+            </button>
+
             <div class="menu-divider"></div>
-            <div class="menu-section-header">Preferences</div>
-            <button class="menu-item" data-menu="toggle-theme"><span id="menu-theme-label">🌓 Toggle Light / Dark Theme</span></button>
-            <button class="menu-item" data-menu="settings"><span>⚙️ Reminder Settings…</span></button>
-            <button class="menu-item" data-menu="shortcuts"><span>⌨️ Keyboard Shortcuts</span><span class="menu-hint">?</span></button>
-            <button class="menu-item" data-menu="about"><span>ℹ️ About PeepJam</span></button>
+            <div class="menu-section-header">Preferences &amp; Help</div>
+            <button class="menu-item" data-menu="toggle-theme">
+              <span class="menu-item-left"><span class="menu-ico">🌓</span><span id="menu-theme-label">Interface Theme</span></span>
+            </button>
+            <button class="menu-item" data-menu="settings">
+              <span class="menu-item-left"><span class="menu-ico">⚙️</span><span>Reminder Settings…</span></span>
+            </button>
+            <button class="menu-item" data-menu="shortcuts">
+              <span class="menu-item-left"><span class="menu-ico">⌨️</span><span>Keyboard Shortcuts</span></span>
+              <span class="menu-hint">?</span>
+            </button>
+            <button class="menu-item" data-menu="about">
+              <span class="menu-item-left"><span class="menu-ico">ℹ️</span><span>About PeepJam</span></span>
+            </button>
+
             <div class="menu-divider"></div>
-            <button class="menu-item danger" data-menu="clear"><span>🗑️ Clear Canvas…</span></button>
+            <button class="menu-item danger" data-menu="clear">
+              <span class="menu-item-left"><span class="menu-ico">🗑️</span><span>Clear Canvas…</span></span>
+            </button>
           </div>
         </div>
 
-        <!-- Desktop App Menu Bar (File / Edit / View / Help) -->
-        <nav class="desktop-menu-bar" id="desktop-menu-bar">
-          <!-- File Menu -->
-          <div class="menu-bar-item" id="menu-bar-file">
-            <button class="menu-bar-btn" id="btn-menu-file">File</button>
-            <div class="menu-dropdown hidden" id="dropdown-file">
-              <button class="menu-item" data-menu="save"><span>💾 Save to Disk</span><span class="menu-hint">Ctrl+S</span></button>
-              <button class="menu-item" data-menu="import-json"><span>📂 Open / Import JSON…</span><span class="menu-hint">Ctrl+O</span></button>
-              <button class="menu-item" data-menu="boards"><span>🗂️ Boards / Recent Canvases…</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="templates"><span>⚡ Templates Library…</span><span class="menu-hint">Ctrl+T</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="export-png"><span>📸 Export as PNG</span><span class="menu-hint">Shift+E</span></button>
-              <button class="menu-item" data-menu="export-json"><span>📦 Export JSON Backup</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="settings"><span>⚙️ Reminder Settings…</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item danger" data-menu="clear"><span>🗑️ Clear Canvas…</span></button>
-            </div>
-          </div>
-
-          <!-- Edit Menu -->
-          <div class="menu-bar-item" id="menu-bar-edit">
-            <button class="menu-bar-btn" id="btn-menu-edit">Edit</button>
-            <div class="menu-dropdown hidden" id="dropdown-edit">
-              <button class="menu-item" data-menu="undo"><span>↩ Undo</span><span class="menu-hint">Ctrl+Z</span></button>
-              <button class="menu-item" data-menu="redo"><span>↪ Redo</span><span class="menu-hint">Ctrl+Y</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="copy"><span>📄 Copy</span><span class="menu-hint">Ctrl+C</span></button>
-              <button class="menu-item" data-menu="paste"><span>📋 Paste</span><span class="menu-hint">Ctrl+V</span></button>
-              <button class="menu-item" data-menu="duplicate"><span>⧉ Duplicate</span><span class="menu-hint">Ctrl+D</span></button>
-              <button class="menu-item" data-menu="select-all"><span>⬚ Select All</span><span class="menu-hint">Ctrl+A</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item danger" data-menu="delete"><span>✕ Delete Selected</span><span class="menu-hint">Del</span></button>
-            </div>
-          </div>
-
-          <!-- Insert Menu -->
-          <div class="menu-bar-item" id="menu-bar-insert">
-            <button class="menu-bar-btn" id="btn-menu-insert">Insert</button>
-            <div class="menu-dropdown hidden" id="dropdown-insert">
-              <button class="menu-item" data-menu="insert-sticky"><span>📝 Sticky Note</span><span class="menu-hint">S</span></button>
-              <button class="menu-item" data-menu="insert-text"><span>🔤 Text Box</span><span class="menu-hint">T</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="insert-shape-rounded-rect"><span>▢ Rounded Rectangle</span><span class="menu-hint">R</span></button>
-              <button class="menu-item" data-menu="insert-shape-rect"><span>▭ Rectangle</span></button>
-              <button class="menu-item" data-menu="insert-shape-circle"><span>◯ Circle</span></button>
-              <button class="menu-item" data-menu="insert-shape-diamond"><span>◇ Decision Diamond</span></button>
-              <button class="menu-item" data-menu="insert-shape-triangle"><span>△ Triangle</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="insert-section"><span>⛶ Section / Container</span><span class="menu-hint">F</span></button>
-              <button class="menu-item" data-menu="insert-line"><span>╱ Straight Line</span><span class="menu-hint">L</span></button>
-              <button class="menu-item" data-menu="insert-connector"><span>↗ Flowchart Arrow</span><span class="menu-hint">C</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="insert-image"><span>🖼️ Image from File…</span></button>
-              <button class="menu-item" data-menu="insert-video"><span>🎥 Video from File…</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="insert-templates"><span>⚡ Templates Library…</span><span class="menu-hint">Ctrl+T</span></button>
-            </div>
-          </div>
-
-          <!-- View Menu -->
-          <div class="menu-bar-item" id="menu-bar-view">
-            <button class="menu-bar-btn" id="btn-menu-view">View</button>
-            <div class="menu-dropdown hidden" id="dropdown-view">
-              <button class="menu-item" data-menu="zoom-in"><span>➕ Zoom In</span><span class="menu-hint">Ctrl +</span></button>
-              <button class="menu-item" data-menu="zoom-out"><span>➖ Zoom Out</span><span class="menu-hint">Ctrl −</span></button>
-              <button class="menu-item" data-menu="zoom-100"><span>🎯 Zoom 100%</span><span class="menu-hint">Ctrl 0</span></button>
-              <button class="menu-item" data-menu="zoom-fit"><span>📐 Fit to Content</span><span class="menu-hint">Shift 1</span></button>
-              <div class="menu-divider"></div>
-              <button class="menu-item" data-menu="toggle-theme"><span id="view-menu-theme-label">🌓 Toggle Light / Dark Theme</span></button>
-              <button class="menu-item" data-menu="grid-toggle"><span id="menu-grid-label">▦ Grid: Dot Grid</span><span class="menu-hint">G</span></button>
-            </div>
-          </div>
-
-          <!-- Help Menu -->
-          <div class="menu-bar-item" id="menu-bar-help">
-            <button class="menu-bar-btn" id="btn-menu-help">Help</button>
-            <div class="menu-dropdown hidden" id="dropdown-help">
-              <button class="menu-item" data-menu="shortcuts"><span>⌨️ Keyboard Shortcuts</span><span class="menu-hint">?</span></button>
-              <button class="menu-item" data-menu="about"><span>ℹ️ About PeepJam</span></button>
-            </div>
-          </div>
-        </nav>
+        <!-- Desktop App Menu Bar (retired in favor of unified navigation hub) -->
+        <nav class="desktop-menu-bar" id="desktop-menu-bar" aria-hidden="true"></nav>
 
         <span class="tb-div"></span>
 
         <div class="board-title-wrapper">
-          <span id="board-title" class="board-title" contenteditable="true" spellcheck="false" title="Click to rename board">Offline Whiteboard</span>
-          <span class="title-edit-hint" title="Rename board">✎</span>
+          <span id="board-title" class="board-title" contenteditable="true" spellcheck="false" title="Click to rename canvas">My Board</span>
+          <button id="btn-header-boards" class="header-boards-btn" title="All Canvases (Ctrl+Shift+B)" aria-label="Switch Canvas">
+            <span class="header-boards-ico">📁</span>
+            <span class="chevron">▾</span>
+          </button>
           <span id="save-status-badge" class="save-status-badge" title="100% Offline Desktop (Local storage only, zero cloud)">
             <span class="pulse-dot"></span>
             <span class="status-text">100% Offline Desktop</span>
@@ -412,8 +370,20 @@
           </button>
           <div id="media-popover" class="dock-popover hidden">
             <div class="popover-title">Insert Media</div>
-            <button class="panel-item" id="media-insert-image"><span class="ico">Image</span><div class="item-info"><span class="title">Image from File…</span></div></button>
-            <button class="panel-item" id="media-insert-video"><span class="ico">Video</span><div class="item-info"><span class="title">Video from File…</span></div></button>
+            <button class="panel-item" id="media-insert-image">
+              <span class="ico">🖼️</span>
+              <div class="item-info">
+                <span class="title">Image from File…</span>
+                <span class="desc">PNG, JPG, SVG, WebP</span>
+              </div>
+            </button>
+            <button class="panel-item" id="media-insert-video">
+              <span class="ico">🎬</span>
+              <div class="item-info">
+                <span class="title">Video from File…</span>
+                <span class="desc">MP4, WebM playback</span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -688,7 +658,7 @@
             <button id="about-close-btn" class="modal-close-btn" title="Close about" aria-label="Close about">✕</button>
           </div>
           <div class="modal-body about-body">
-            <p style="font-size: 15px; font-weight: 700; color: #C8F560; margin: 0 0 6px 0;">PeepJam Offline Whiteboard</p>
+            <p class="about-app-title">PeepJam Offline Whiteboard</p>
             <p style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0 0 16px 0;">
               High-performance, 100% local PeepJam whiteboard since day one built for your desktop. Zero cloud dependencies, zero telemetry, full offline privacy.
             </p>
@@ -715,18 +685,18 @@
           <div class="modal-header">
             <div class="modal-title">
               <span class="icon">🗂️</span>
-              <span>Boards</span>
+              <span>Your Canvases</span>
             </div>
-            <button id="boards-close-btn" class="modal-close-btn" title="Close boards" aria-label="Close boards">✕</button>
+            <button id="boards-close-btn" class="modal-close-btn" title="Close canvases" aria-label="Close canvases">✕</button>
           </div>
           <div class="modal-body boards-body">
-            <div id="boards-empty" class="hidden boards-empty">No canvases yet. Create one below.</div>
+            <div id="boards-empty" class="hidden boards-empty">No canvases yet. Create your first canvas below.</div>
             <div id="boards-list" class="boards-list" role="list" aria-label="Saved canvases"></div>
             <div class="boards-new-row">
               <input id="boards-new-name" type="text" placeholder="New canvas name…" aria-label="New canvas name" maxlength="120" />
-              <button id="boards-create-btn" class="modal-btn">Create</button>
+              <button id="boards-create-btn" class="modal-btn">Create Canvas</button>
             </div>
-            <p class="boards-hint">Archived canvases stay in this file until you restore them. Export JSON backups from the File menu.</p>
+            <p class="boards-hint">All canvases are stored 100% offline on your device. Switching canvases saves your work automatically.</p>
           </div>
         </div>
       </div>

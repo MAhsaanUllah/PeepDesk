@@ -6,7 +6,7 @@
 
 *Your little companion for a bigger mind.*
 
-[![release](https://img.shields.io/badge/release-v0.1.0-F59E0B)](https://github.com/MAhsaanUllah/PeepDesk)
+[![release](https://img.shields.io/badge/release-v0.2.0-F59E0B)](https://github.com/MAhsaanUllah/PeepDesk)
 [![platform](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows&logoColor=white)](#windows-installation)
 [![Electron](https://img.shields.io/badge/Electron-38-2B2E3A?logo=electron&logoColor=white)](https://www.electronjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -15,7 +15,7 @@
 
 </div>
 
-PeepDesk is an ultra-lightweight Windows desktop companion: a floating animated mascot, hydration and chai-break reminders, and an instant-summon infinite whiteboard canvas — one small Electron app, all data stored locally.
+PeepDesk is an ultra-lightweight Windows desktop companion combining an animated mascot companion with health reminders (hydration and chai-break) and **PeepJam**: an instant-summon, 100% offline freeform spatial whiteboard canvas with multi-board switching, diagrams, sticky notes, connectors, and workflow import. All data is stored locally on your device.
 
 ![PeepDesk hero](assets/screenshots/hero.png)
 
@@ -69,11 +69,11 @@ The pet reacts to your reminders — idle on the desktop, focused when it's time
 
 ## Windows installation
 
-1. Download `PeepDesk-Setup-0.1.0.exe` from the [latest release](https://github.com/MAhsaanUllah/PeepDesk/releases/latest).
+1. Download `PeepDesk-Setup-0.2.0.exe` from the [latest release](https://github.com/MAhsaanUllah/PeepDesk/releases/latest).
 2. Run it — a per-user silent install; no administrator rights required. The app installs to `%LOCALAPPDATA%\Programs\peepdesk` and adds a **PeepDesk** Start Menu shortcut.
 3. Launch **PeepDesk** from the Start Menu; it also starts automatically on login from then on.
 
-PeepDesk v0.1.0 is currently distributed as an unsigned Windows portfolio build, so Windows SmartScreen may show an unrecognized publisher warning. Choose "More info" → "Run anyway" if you trust the source of the download; you can leave Defender and SmartScreen enabled.
+PeepDesk v0.2.0 is currently distributed as an unsigned Windows portfolio build, so Windows SmartScreen may show an unrecognized publisher warning. Choose "More info" → "Run anyway" if you trust the source of the download; you can leave Defender and SmartScreen enabled.
 
 ## Data & privacy
 

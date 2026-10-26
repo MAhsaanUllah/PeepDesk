@@ -138,6 +138,7 @@ export function freshDoc(): AppStateV2 {
   const board: BoardRecord = {
     id: newBoardId(),
     name: 'My Board',
+    title: 'My Board',
     createdAt: now,
     updatedAt: now,
     items: []
@@ -168,8 +169,9 @@ export function normalizeActiveBoard(doc: AppStateV2): void {
 export function flattenActiveBoard(doc: AppStateV2): AppState {
   normalizeActiveBoard(doc);
   const board = doc.boards.find((b) => b.id === doc.activeBoardId) ?? doc.boards[0];
+  const title = board.title || board.name || 'My Board';
   return {
-    ...(board.title !== undefined ? { title: board.title } : {}),
+    title,
     ...(board.pan !== undefined ? { pan: board.pan } : {}),
     ...(board.zoom !== undefined ? { zoom: board.zoom } : {}),
     ...(board.gridStyle !== undefined ? { gridStyle: board.gridStyle } : {}),
@@ -196,7 +198,13 @@ export function upsertBoardFromFlat(
     board = doc.boards.find((b) => b.id === doc.activeBoardId);
   }
   if (!board) return doc;
-  if (flat.title !== undefined) board.title = flat.title;
+  if (flat.title !== undefined) {
+    board.title = flat.title;
+    const trimmed = flat.title.trim();
+    if (trimmed) {
+      board.name = trimmed;
+    }
+  }
   if (flat.pan !== undefined) board.pan = flat.pan;
   if (flat.zoom !== undefined) board.zoom = flat.zoom;
   if (flat.gridStyle !== undefined) board.gridStyle = flat.gridStyle;

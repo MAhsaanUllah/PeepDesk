@@ -25,5 +25,6 @@ export const IPC = {
   boardRestore: 'boards:restore',
   boardSwitch: 'boards:switch',
   boardDocumentExport: 'boards:document-export',
-  boardDocumentImport: 'boards:document-import'
+  boardDocumentImport: 'boards:document-import',
+  themeSet: 'theme:set'
 } as const;

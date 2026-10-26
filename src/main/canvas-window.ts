@@ -89,3 +89,22 @@ export function toggleCanvas(): void {
     canvasWindow.focus();
   }
 }
+
+export function updateCanvasTitleBarTheme(theme: string): void {
+  if (!canvasWindow || canvasWindow.isDestroyed()) return;
+  const isLight = theme === 'light';
+  if (process.platform === 'win32' && typeof canvasWindow.setTitleBarOverlay === 'function') {
+    try {
+      canvasWindow.setTitleBarOverlay({
+        color: isLight ? '#F4F3EE' : '#111210',
+        symbolColor: isLight ? '#1D1E1A' : '#F4F3EE',
+        height: 54
+      });
+    } catch (e) {
+      console.warn('Failed to update titleBarOverlay', e);
+    }
+  }
+  try {
+    canvasWindow.setBackgroundColor(isLight ? '#F4F3EE' : '#111210');
+  } catch {}
+}

@@ -1,7 +1,7 @@
 {
   "name": "peepdesk",
   "productName": "PeepDesk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ultra-lightweight Windows desktop companion: floating pet, health reminders, instant whiteboard canvas.",
   "author": "MAhsaan Ullah",
   "main": "dist/main/index.js",
